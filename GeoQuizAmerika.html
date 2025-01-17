@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Geografie-Quiz</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="GeoQuiz.css" media="screen" />
+</head>
+<body>    
+        <div id="menu">
+            <a href="GeoQuizEuropa.html">Europa</a><br/> 
+		    <a href="GeoQuizAfrika.html">Afrika</a><br/>
+            <a href="GeoQuizAmerika.html">Amerika</a><br/>
+		</div>
+    
+    <div class="container">
+        <div id="progress">Fragen: 0/0</div>
+        <img id="questionImage" src="Bilder/Bild_Terre-Neuve.png" alt="Frage Bild">
+        <p id="question">Frage wird hier angezeigt</p>
+        <input type="text" id="userAnswer" placeholder="Antwort hier eingeben">
+        <div class="result" id="result"></div>
+    </div>
+
+    
+    <script>
+        const questions = [
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Erié",
+                image: "Bilder/Lac_Erié.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Huron",
+                image: "Bilder/Lac_Huron.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Michigan",
+                image: "Bilder/Lac_Michigan.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Ontario",
+                image: "Bilder/Lac_Ontario.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Supérieur",
+                image: "Bilder/Lac_surpérieur.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Maracaibo",
+                image: "Bilder/Lac_Maracaibo.jpeg"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Titicaca",
+                image: "Bilder/Lac_Titicaca.jpeg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Alaska",
+                image: "Bilder/Bild_Alaska.jpg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Amazonie",
+                image: "Bilder/Bild_Amazonie.jpg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Patagonie",
+                image: "Bilder/Bild_Patagonie.jpg"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Falklands",
+                image: "Bilder/Bild_Falklands.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Galapagos",
+                image: "Bilder/Bild_Galapagos.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Petites Antilles",
+                image: "Bilder/Bild_Petites_Antilles.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Groenland",
+                image: "Bilder/Bild_Groenland.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Terre de Baffin",
+                image: "Bilder/Bild_Terre%20de%20Baffin.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Terre de Feu",
+                image: "Bilder/Bild_Terre%20de%20Feu.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Terre-Neuve",
+                image: "Bilder/Bild_Terre-Neuve.png"
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        // Fragen shuffel
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }shuffleArray(questions);
+ 
+        function updateProgress() {
+            document.getElementById("progress").textContent =  currentQuestionIndex+ "/" + questions.length;
+        }
+
+        function loadQuestion() {
+            document.getElementById("question").textContent = questions[currentQuestionIndex].question;
+            document.getElementById("questionImage").src = questions[currentQuestionIndex].image;
+            document.getElementById("userAnswer").value = "";
+            document.getElementById("result").textContent = "";
+            updateProgress();
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+            const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+            const resultDiv = document.getElementById("result");
+
+            if (userAnswer === correctAnswer) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion(); 
+                    updateProgress();
+                } else {
+                    resultDiv.textContent = "Gratuliere! Du hast " + score + " Fehler gemacht.";
+                    resultDiv.style.color = "green";
+                    document.getElementById("question").textContent = "Das Quiz ist beendet!";
+                    document.getElementById("userAnswer").style.display = "none"; // Eingabefeld ausblenden
+                    document.getElementById("questionImage").style.display = "none"; // Bild ausblenden
+                    document.getElementById("progress").textContent = " ";
+                }
+            } else {
+                resultDiv.textContent = "Falsch. Die Richtige Antwort währe " + questions[currentQuestionIndex].answer + " gewesen.";
+                resultDiv.style.color = "red";
+                score++;
+            }
+        }
+
+        document.getElementById("userAnswer").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+        });
+        loadQuestion();
+    </script>
+</body>
+</html>

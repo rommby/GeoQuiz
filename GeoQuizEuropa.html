@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Geografie-Quiz</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="GeoQuiz.css" media="screen" />
+</head>
+<body>    
+        <div id="menu">
+            <a href="GeoQuizEuropa.html">Europa</a><br/> 
+		    <a href="GeoQuizAfrika.html">Afrika</a><br/>
+            <a href="GeoQuizAmerika.html">Amerika</a><br/>
+		</div>
+    
+    <div class="container">
+        <div id="progress">Fragen: 0/0</div>
+        <img id="questionImage" src="Bilder_Eu/Sicile(I).png" alt="Frage Bild">
+        <p id="question">Frage wird hier angezeigt</p>
+        <input type="text" id="userAnswer" placeholder="Antwort hier eingeben">
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Was ist die Hauptstadt von Arménie?",
+                answer: "Erevan",
+                image: ""
+            },
+            {
+                question: "Was ist die Hauptstadt von Turquie?",
+                answer: "Ankara",
+                image: ""
+            },
+            {
+                question: "Was ist die Hauptstadt von Azerbaïdjan?",
+                answer: "Bakou",
+                image: ""
+            },
+            {
+                question: "Was ist die Hauptstadt von  Géorgie?",
+                answer: "Tbilissi",
+                image: ""
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Balkans",
+                image: "Bilder_Eu/Balkans.jpg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Crimée",
+                image: "Bilder_Eu/Crim%C3%A9e.png"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Grande-Bretagne",
+                image: "Bilder_Eu/Grande-Bretagne.jpg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Pays baltes",
+                image: "Bilder_Eu/Pays_baltes.png"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Péninsule ibérique",
+                image: "Bilder_Eu/P%C3%A9ninsule%20ib%C3%A9rique.png"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Scandinavie",
+                image: "Bilder_Eu/Scandinavie.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Baléares(E)",
+                image: "Bilder_Eu/Bal%C3%A9ares_MMI.jpg"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Corse(F)",
+                image: "Bilder_Eu/Corse.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Crète(GR)",
+                image: "Bilder_Eu/Cr%C3%A8te(Gr).png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Sardaigne(I)",
+                image: "Bilder_Eu/sardaigne.png"
+            },
+            {
+                question: "Welche Insel wird hier gezeigt?",
+                answer: "Sicile(I)",
+                image: "Bilder_Eu/Sicile(I).png"
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        // Fragen shuffel
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }shuffleArray(questions);
+ 
+        function updateProgress() {
+            document.getElementById("progress").textContent =  currentQuestionIndex+ "/" + questions.length;
+        }
+
+        function loadQuestion() {
+            document.getElementById("question").textContent = questions[currentQuestionIndex].question;
+            document.getElementById("questionImage").src = questions[currentQuestionIndex].image;
+            document.getElementById("userAnswer").value = "";
+            document.getElementById("result").textContent = "";
+            updateProgress();
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+            const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+            const resultDiv = document.getElementById("result");
+
+            if (userAnswer === correctAnswer) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion(); 
+                    updateProgress();
+                } else {
+                    resultDiv.textContent = "Gratuliere! Du hast " + score + " Fehler gemacht.";
+                    resultDiv.style.color = "green";
+                    document.getElementById("question").textContent = "Das Quiz ist beendet!";
+                    document.getElementById("userAnswer").style.display = "none"; // Eingabefeld ausblenden
+                    document.getElementById("questionImage").style.display = "none"; // Bild ausblenden
+                    document.getElementById("progress").textContent = " ";
+                }
+            } else {
+                resultDiv.textContent = "Falsch. Die Richtige Antwort währe " + questions[currentQuestionIndex].answer + " gewesen.";
+                resultDiv.style.color = "red";
+                score++;
+            }
+        }
+
+        document.getElementById("userAnswer").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+        });
+        loadQuestion();
+    </script>
+</body>
+</html>

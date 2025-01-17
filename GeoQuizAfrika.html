@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Geografie-Quiz</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="GeoQuiz.css" media="screen" />
+</head>
+<body>    
+        <div id="menu">
+            <a href="GeoQuizEuropa.html">Europa</a><br/> 
+		    <a href="GeoQuizAfrika.html">Afrika</a><br/>
+            <a href="GeoQuizAmerika.html">Amerika</a><br/>
+		</div>
+    
+    <div class="container">
+        <div id="progress">Fragen: 0/0</div>
+        <img id="questionImage" src="Bilder_Af/Lac_Victoria.png" alt="Frage Bild">
+        <p id="question">Frage wird hier angezeigt</p>
+        <input type="text" id="userAnswer" placeholder="Antwort hier eingeben">
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Tchad",
+                image: "Bilder_Af/Lac_Tchad.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Tanganyika",
+                image: "Bilder_Af/Lac_Tanganyika.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Malawi",
+                image: "Bilder_Af/Lac_Malawi.png"
+            },
+            {
+                question: "Welcher See wird hier gezeigt?",
+                answer: "Lac Victoria",
+                image: "Bilder_Af/Lac_Victoria.png"
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        // Fragen shuffel
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }shuffleArray(questions);
+ 
+        function updateProgress() {
+            document.getElementById("progress").textContent =  currentQuestionIndex+ "/" + questions.length;
+        }
+
+        function loadQuestion() {
+            document.getElementById("question").textContent = questions[currentQuestionIndex].question;
+            document.getElementById("questionImage").src = questions[currentQuestionIndex].image;
+            document.getElementById("userAnswer").value = "";
+            document.getElementById("result").textContent = "";
+            updateProgress();
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+            const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
+            const resultDiv = document.getElementById("result");
+
+            if (userAnswer === correctAnswer) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion(); 
+                    updateProgress();
+                } else {
+                    resultDiv.textContent = "Gratuliere! Du hast " + score + " Fehler gemacht.";
+                    resultDiv.style.color = "green";
+                    document.getElementById("question").textContent = "Das Quiz ist beendet!";
+                    document.getElementById("userAnswer").style.display = "none"; // Eingabefeld ausblenden
+                    document.getElementById("questionImage").style.display = "none"; // Bild ausblenden
+                    document.getElementById("progress").textContent = " ";
+                }
+            } else {
+                resultDiv.textContent = "Falsch. Die Richtige Antwort währe " + questions[currentQuestionIndex].answer + " gewesen.";
+                resultDiv.style.color = "red";
+                score++;
+            }
+        }
+
+        document.getElementById("userAnswer").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+        });
+        loadQuestion();
+    </script>
+</body>
+</html>
+</html>
