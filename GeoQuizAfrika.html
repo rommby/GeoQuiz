@@ -7,14 +7,14 @@
 </head>
 <body>    
         <div id="menu">
-            <a href="GeoQuizEuropa.html">Europa</a><br/> 
-		    <a href="GeoQuizAfrika.html">Afrika</a><br/>
-            <a href="GeoQuizAmerika.html">Amerika</a><br/>
+            <a href="GeoQuizEuropa.html">Europa</a>
+		    <a href="GeoQuizAfrika.html" class="highlite">Afrika</a>
+            <a href="GeoQuizAmerika.html">Amerika</a>
 		</div>
     
     <div class="container">
         <div id="progress">Fragen: 0/0</div>
-        <img id="questionImage" src="Bilder_Af/Lac_Victoria.png" alt="Frage Bild">
+        <img id="questionImage" src="Bilder_Af/Corne_de_l'Afrique.png" alt="Frage Bild">
         <p id="question">Frage wird hier angezeigt</p>
         <input type="text" id="userAnswer" placeholder="Antwort hier eingeben">
         <div class="result" id="result"></div>
@@ -41,6 +41,21 @@
                 question: "Welcher See wird hier gezeigt?",
                 answer: "Lac Victoria",
                 image: "Bilder_Af/Lac_Victoria.png"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Sahel",
+                image: "Bilder_Af/Sahel.avif"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Maghreb",
+                image: "Bilder_Af/Maghreb.jpg"
+            },
+            {
+                question: "Welche Region ist hier Markiert?",
+                answer: "Corne de l'Afrique",
+                image: "Bilder_Af/Corne_de_l'Afrique.png"
             },
         ];
 
@@ -100,5 +115,4 @@
         loadQuestion();
     </script>
 </body>
-</html>
 </html>
